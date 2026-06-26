@@ -21,7 +21,7 @@ This is the official repository for:
 <p align="center">
   <img src="assets/teaser.png" width="95%">
 </p>
-<p align="center"><b>Overview of the proposed closed-loop PID framework for reference-consistent image generation.</b></p>
+<p align="center"><b>Overview. We reformulate reference-consistent generation as a closed-loop dynamic tracking problem: the pre-trained generator is a control plant driven by a modified PID sensor–controller.</b></p>
 
 <!-- ## 📰 News
 
@@ -29,15 +29,11 @@ This is the official repository for:
 
 ## 📖 Introduction
 
-Reference-consistent image generation (e.g., preserving a subject's identity across generations) remains challenging: a single forward pass through a diffusion model with a reference embedding is an **open-loop** process — once the condition is fed in, there is no feedback to correct the gap between what *should* be generated and what *is* generated.
+Controllable image generation has advanced rapidly by injecting visual reference conditions, yet existing methods predominantly operate as **open-loop systems**: control signals are fed in a strictly feed-forward manner, with **no active feedback or error correction** — so they cannot guarantee strict fidelity to the reference.
 
-We reformulate reference-consistent generation as a **closed-loop control problem** and apply **PID (Proportional–Integral–Derivative) feedback control at test time**. After each generation round we:
+We propose a **test-time iterative optimization framework** that reformulates reference-consistent generation as a **closed-loop dynamic tracking problem**. Treating the pre-trained generative model as a **control plant**, the framework adopts a **sensor–controller architecture** driven by a **modified PID (Proportional–Integral–Derivative) algorithm**: at each round the sensor measures the discrepancy between the generated output and the reference target, and the controller iteratively corrects the **latent control signal**.
 
-1. Extract the identity embedding of the generated image,
-2. Measure the gap against the reference embedding (the control *error*),
-3. Feed a **PID correction** back into the reference embedding used as the condition for the next round.
-
-This requires **no extra training** and **no modification to the diffusion model weights** — it is a purely test-time, iterative refinement loop that can be dropped onto any reference-conditioned generator.
+The approach is entirely **training-free** and **model-agnostic**, integrating seamlessly around existing diffusion pipelines. We validate its **universality** across three settings — **ID-preserving**, **pose-controlled**, and **depth-controlled** generation — each provided here as a minimal closed-loop script.
 
 ### The PID update rule
 
@@ -51,7 +47,19 @@ faceid_embeds = origin_faceid_embeds
 delta0     = delta                                              # store for next derivative
 ```
 
-Across iterations we keep the highest-similarity image as the final output.
+Shown for the face-identity signal (Portrait); the identical rule is applied to the depth map and pose keypoints in the Spatial scripts. Across iterations the best image is kept — highest identity similarity (Portrait), or lowest spatial error (Spatial).
+
+## 📈 Results
+
+The closed-loop framework improves over **computation-matched open-loop baselines** across all three settings, while being **training-free** and **model-agnostic**:
+
+| Setting | Metric | Gain over open-loop |
+|---------|--------|:---:|
+| ID-preserving (Portrait) | Facial similarity | **+25.36%** (relative) |
+| Pose-controlled (Spatial) | Pose alignment error | **−27.71%** |
+| Depth-controlled (Spatial) | Depth consistency error | **−28.50%** |
+
+*Relative improvement / error reduction, up to the value shown.*
 
 ## 🗂️ Repository Structure
 
