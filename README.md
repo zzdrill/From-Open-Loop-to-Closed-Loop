@@ -18,9 +18,14 @@ This is the official repository for:
 
 ---
 
-## 📰 News
+<p align="center">
+  <img src="assets/teaser.png" width="95%">
+</p>
+<p align="center"><b>Overview of the proposed closed-loop PID framework for reference-consistent image generation.</b></p>
 
-- **[2026]** 🔥 Code release for the **Portrait** setting (SDXL + IP-Adapter FaceID).
+<!-- ## 📰 News
+
+- **[2026]** 🔥 Code release for the **Portrait** setting (SDXL + IP-Adapter FaceID). -->
 
 ## 📖 Introduction
 
@@ -29,7 +34,7 @@ Reference-consistent image generation (e.g., preserving a subject's identity acr
 We reformulate reference-consistent generation as a **closed-loop control problem** and apply **PID (Proportional–Integral–Derivative) feedback control at test time**. After each generation round we:
 
 1. Extract the identity embedding of the generated image,
-2. Measure the **cosine-similarity gap** against the reference embedding (the control *error*),
+2. Measure the gap against the reference embedding (the control *error*),
 3. Feed a **PID correction** back into the reference embedding used as the condition for the next round.
 
 This requires **no extra training** and **no modification to the diffusion model weights** — it is a purely test-time, iterative refinement loop that can be dropped onto any reference-conditioned generator.
