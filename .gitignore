@@ -16,3 +16,6 @@ env/
 *.swp
 .idea/
 .vscode/
+
+# Paper figure source (teaser is rendered to assets/teaser.png; keep PDF source local)
+main.pdf

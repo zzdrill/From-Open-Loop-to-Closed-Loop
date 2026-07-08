@@ -166,18 +166,21 @@ cd Spatial  && python pid_pose.py           # pose
 
 Each script writes the generated image to `output_name` on every iteration, so the last written image is the result of the final PID-corrected round.
 
-<!-- ## 📚 Citation
+## 📚 Citation
 
 If you find this work useful, please cite:
 
 ```bibtex
-@inproceedings{zhao2026fromopenclosed,
-  title     = {From Open Loop to Closed Loop: A Test-Time Iterative Optimization Framework for Reference-Consistent Image Generation},
-  author    = {Zhao, Baixuan and Zhang, Xinyu and Zheng, Huayu and Liu, Shuaicheng and Min, Xiongkuo and Zhai, Guangtao and Liu, Xiaohong},
-  booktitle = {Proceedings of the European Conference on Computer Vision (ECCV)},
-  year      = {2026}
+@misc{zhao2026openloopclosedloop,
+  title         = {From Open Loop to Closed Loop: A Test-Time Iterative Optimization Framework for Reference-Consistent Image Generation},
+  author        = {Baixuan Zhao and Xinyu Zhang and Huayu Zheng and Shuaicheng Liu and Xiongkuo Min and Guangtao Zhai and Xiaohong Liu},
+  year          = {2026},
+  eprint        = {2607.04691},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2607.04691}
 }
-``` -->
+```
 
 ## 🙏 Acknowledgements
 
